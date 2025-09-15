@@ -1,37 +1,123 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
-
-enum RoleUser{
+enum RoleUser {
   superadmin
   customer
 }
+
 model User {
-  id       Int      @id @default(autoincrement())
-  name     String
-  email    String   @unique
-  password String
-  role     RoleUser @default(customer)
-}
-model Brand{
-  id Int @id @default(autoincrement())
-  name String 
-  logo String 
-  
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  type      RoleUser @default(customer) // disamain sama ERD (type)
+  orders    Order[]
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
 
+model Brand {
+  id        Int       @id @default(autoincrement())
+  logo      String
+  name      String    @db.VarChar(255)
+  products  Product[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  products  Product[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Location {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  products  Product[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+enum ProductStock {
+  ready
+  preorder
+}
+
+model Product {
+  id          Int           @id @default(autoincrement())
+  brand_id    Int
+  brand       Brand         @relation(fields: [brand_id], references: [id])
+  category_id Int
+  category    Category      @relation(fields: [category_id], references: [id])
+  location_id Int
+  location    Location      @relation(fields: [location_id], references: [id])
+  name        String        @db.VarChar(255)
+  description String
+  price       String        // di ERD varchar
+  stock       ProductStock
+  images      String[]
+  orderItems  OrderProduct[]
+
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+enum StatusOrder {
+  pending
+  success
+  failed
+}
+
+model Order {
+  id         Int           @id @default(autoincrement())
+  code       String        @unique
+  user_id    Int
+  user       User          @relation(fields: [user_id], references: [id])
+  total      Int
+  status     StatusOrder
+  detail     OrderDetail?
+  products   OrderProduct[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model OrderDetail {
+  id          Int     @id @default(autoincrement())
+  order_id    Int     @unique
+  order       Order   @relation(fields: [order_id], references: [id])
+  name        String
+  phone       String
+  address     String
+  city        String
+  postal_code String
+  notes       String
+
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model OrderProduct {
+  id         Int     @id @default(autoincrement())
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id])
+  order_id   Int
+  order      Order   @relation(fields: [order_id], references: [id])
+  subtotal   Int
+  quantity   Int
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
