@@ -11,12 +11,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import React, { useActionState } from "react";
-import { useFormState } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { SignIn } from "../lib/action";
 import { ActionResult } from "@/types";
 const initialState: ActionResult = {
 	error: "",
 };
+function SubmitButton() {
+	const { pending } = useFormStatus();
+	return (
+		<Button
+			type="submit"
+			className="w-full pointer-events-auto"
+			disabled={pending}>
+			{pending ? "loading..." : "sign in"}
+		</Button>
+	);
+}
 
 const FormSignIn = () => {
 	const [state, FormAction] = useActionState(SignIn, initialState);
@@ -27,8 +38,10 @@ const FormSignIn = () => {
 		<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 			<Card>
 				<CardHeader>
-					<CardTitle>Login to your account</CardTitle>
-					<CardDescription>
+					<CardTitle className="text-center text-1xl">
+						Login to your account
+					</CardTitle>
+					<CardDescription className="text-center">
 						Enter your email below to login to your account
 					</CardDescription>
 				</CardHeader>
@@ -43,21 +56,18 @@ const FormSignIn = () => {
 									type="email"
 									name="email"
 									placeholder="m@example.com"
-									required
+									
 								/>
 							</div>
 							<div className="grid gap-3">
 								<div className="flex items-center">
 									<Label htmlFor="password">Password</Label>
 								</div>
-								<Input id="password" type="password" name="password" required />
+								<Input id="password" type="password" name="password"  />
 							</div>
-							<div className="flex flex-col gap-3">
-								<Button type="submit" className="w-full">
-									Sign in
-								</Button>
-							</div>
+							<div className="flex flex-col gap-3"></div>
 						</div>
+						<SubmitButton></SubmitButton>
 					</form>
 				</CardContent>
 			</Card>
