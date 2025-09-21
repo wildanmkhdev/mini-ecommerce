@@ -20,6 +20,9 @@ const initialState: ActionResult = {
 
 const FormSignIn = () => {
 	const [state, FormAction] = useActionState(SignIn, initialState);
+	//state nyimpan hasil action
+	//formaction agar tahu form memanggil sinin ketika di submit
+	// useActionState gunanya buat bikin form lebih mudah terhubung ke server action + otomatis punya state hasilnya.
 	return (
 		<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 			<Card>
@@ -34,7 +37,7 @@ const FormSignIn = () => {
 						<div className="flex flex-col gap-6">
 							<div className="grid gap-3">
 								<Label htmlFor="email">Email</Label>
-							
+
 								<Input
 									id="email"
 									type="email"

@@ -15,6 +15,7 @@ export async function SignIn(
 	// Ambil isi input form dengan name="email"
 	// Contoh: kalau user isi email "wildan@gmail.com", maka itu yang diambil
 	console.log(formData.get("email"));
+	console.log(formData.get("password"));
 	// Setelah ambil data form, user langsung diarahkan ke halaman lain
 	// Dalam contoh ini, user dipindahkan ke /dashboard/sign-in
 	return redirect("/dashboard/sign-in");
