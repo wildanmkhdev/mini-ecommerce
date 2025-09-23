@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+//kita buat dulu chema buat validasi form kita
 export const schemaSignIn = z.object({
 	email: z
 		.string({ required_error: "Email wajib diisi" })

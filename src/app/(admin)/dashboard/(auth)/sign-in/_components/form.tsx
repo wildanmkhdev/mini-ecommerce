@@ -19,6 +19,8 @@ const initialState: ActionResult = {
 };
 function SubmitButton() {
 	const { pending } = useFormStatus();
+	// desctructring status pending dari useformstatus yg akan di pakai untuk mnegisi status disabled nya
+
 	return (
 		<Button
 			type="submit"

@@ -17,11 +17,13 @@ export async function SignIn(
 		email: formData.get("email"),
 		password: formData.get("password"),
 	});
+	//safe parse itu ngecek data kalau valid succesnya truee dna tampilkan data kalau tidak dia error 
+
 	if (!validate.success) {
 		console.log(validate); // log dulu
 
 		return {
-			error: validate.error.errors[0].message,
+			error: validate.error.issues[0].message,
 		};
 	}
 	// Setelah ambil data form, user langsung diarahkan ke halaman lain
