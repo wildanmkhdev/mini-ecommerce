@@ -1,9 +1,12 @@
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
+//supaya lucia bisa akses database lwat prisma
 import prisma from "./utils";
 import { Lucia } from "lucia";
+
 import { RoleUser } from "@/generated/prisma";
 import { cache } from "react";
 import { cookies } from "next/headers";
+//akses cookies di next js tempat simpan session id
 
 const adapter = new PrismaAdapter(prisma.session, prisma.user);
 export const lucia = new Lucia(adapter, {

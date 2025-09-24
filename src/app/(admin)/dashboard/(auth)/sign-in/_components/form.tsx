@@ -22,10 +22,7 @@ function SubmitButton() {
 	// desctructring status pending dari useformstatus yg akan di pakai untuk mnegisi status disabled nya
 
 	return (
-		<Button
-			type="submit"
-			className="w-full pointer-events-auto"
-			disabled={pending}>
+		<Button type="submit" className="w-full" disabled={pending}>
 			{pending ? "loading..." : "sign in"}
 		</Button>
 	);
@@ -58,14 +55,13 @@ const FormSignIn = () => {
 									type="email"
 									name="email"
 									placeholder="m@example.com"
-									
 								/>
 							</div>
 							<div className="grid gap-3">
 								<div className="flex items-center">
 									<Label htmlFor="password">Password</Label>
 								</div>
-								<Input id="password" type="password" name="password"  />
+								<Input id="password" type="password" name="password" />
 							</div>
 							<div className="flex flex-col gap-3"></div>
 						</div>
