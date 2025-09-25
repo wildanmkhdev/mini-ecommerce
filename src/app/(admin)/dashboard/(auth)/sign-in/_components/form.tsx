@@ -14,6 +14,8 @@ import React, { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { SignIn } from "../lib/action";
 import { ActionResult } from "@/types";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircleIcon } from "lucide-react";
 const initialState: ActionResult = {
 	error: "",
 };
@@ -45,6 +47,17 @@ const FormSignIn = () => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
+				{state.error!= "" && (
+						<Alert variant="destructive">
+						<AlertCircleIcon />
+						<AlertTitle>Unable to process your payment.</AlertTitle>
+						<AlertDescription>
+							{state.error}
+						
+							
+						</AlertDescription>
+					</Alert>
+				)}
 					<form action={FormAction}>
 						<div className="flex flex-col gap-6">
 							<div className="grid gap-3">
