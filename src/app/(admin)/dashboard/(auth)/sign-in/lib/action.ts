@@ -1,11 +1,11 @@
 "use server";
-import { schemaSignIn } from "@/lib/schema";
 // Tandanya: kode ini jalan di server (bukan di browser).
 // Jadi cocok untuk proses login, register, database, dll.
+
+import { schemaSignIn } from "@/lib/schema";
 import bcrypt from "bcrypt";
 import { ActionResult } from "@/types";
 // Import tipe hasil fungsi (supaya lebih rapih pakai TypeScript).
-
 import { redirect } from "next/navigation";
 import prisma from "../../../../../../../lib/prisma";
 import { lucia } from "@/lib/auth";
