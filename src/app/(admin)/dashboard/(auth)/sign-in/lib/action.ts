@@ -37,7 +37,7 @@ export async function SignIn(
 	});
 	if (!existingUser) {
 		return {
-			error: "email not founcd",
+			error: "email kamu tidak terdaftar",
 		};
 	}
 	const comparePassword = bcrypt.compareSync(
@@ -46,7 +46,7 @@ export async function SignIn(
 	);
 	if (!comparePassword) {
 		return {
-			error: "password in correct",
+			error: "maaf.. Password yang kamu masukan salah",
 		};
 	}
 	const session = await lucia.createSession(existingUser.id, {});

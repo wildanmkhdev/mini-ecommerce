@@ -47,17 +47,15 @@ const FormSignIn = () => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-				{state.error!= "" && (
+					{state.error != "" && (
 						<Alert variant="destructive">
-						<AlertCircleIcon />
-						<AlertTitle>Unable to process your payment.</AlertTitle>
-						<AlertDescription>
-							{state.error}
-						
-							
-						</AlertDescription>
-					</Alert>
-				)}
+							<AlertCircleIcon />
+							<AlertTitle>Peringatan !!!</AlertTitle>
+							<AlertDescription className="capitalize">
+								{state.error}
+							</AlertDescription>
+						</Alert>
+					)}
 					<form action={FormAction}>
 						<div className="flex flex-col gap-6">
 							<div className="grid gap-3">
