@@ -18,12 +18,19 @@ import {
 } from "@/components/ui/sidebar";
 import { Search } from "lucide-react";
 import Header from "./_components/Header";
+import { getUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default function AuthLayout({
+export default async function AuthLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const { session } = await getUser();
+
+	if (!session) {
+		return redirect("/dashboard/sign-in");
+	}
 	return (
 		<main>
 			<div>

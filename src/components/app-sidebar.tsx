@@ -37,6 +37,7 @@ import {
 	SidebarRail,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import FormLogout from "@/app/(admin)/dashboard/(index)/_components/form-logout";
 
 // This is sample data.
 const data = {
@@ -237,9 +238,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				{/* <NavProjects projects={data.projects} /> */}
 			</SidebarContent>
 			<SidebarFooter>
-				<Link href={"/Logout"}>
-					<LogOut></LogOut>
-				</Link>
+				<FormLogout></FormLogout>
 			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>
