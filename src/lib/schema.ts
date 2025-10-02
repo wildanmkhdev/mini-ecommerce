@@ -8,3 +8,11 @@ export const schemaSignIn = z.object({
 		.string({ required_error: "Password wajib diisi" })
 		.min(5, { message: "Password minimal 5 karakter" }),
 });
+
+export const schemaCategory = z.object({
+	name: z
+		.string({
+			required_error: "name is required",
+		})
+		.min(4, { message: "name minimal 4 karakter" }),
+});
