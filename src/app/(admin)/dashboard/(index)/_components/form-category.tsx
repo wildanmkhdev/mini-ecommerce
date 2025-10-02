@@ -12,15 +12,43 @@ import {
 import { Input } from "@/components/ui/input";
 import { ActionResult } from "@/types";
 import { Label } from "@radix-ui/react-label";
-import { ChevronLeft } from "lucide-react";
+import { AlertCircleIcon, ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { useFormState } from "react-dom";
-import postCategory from "../categories/lib/actions";
+import { useFormState, useFormStatus } from "react-dom";
+import postCategory, { updateCategory } from "../categories/lib/actions";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useActionState } from "react";
+import { Category } from "@prisma/client";
 const initialState: ActionResult = {
 	error: "",
 };
-export default function FormCategory() {
-	const [state, formAction] = useFormState(postCategory, initialState);
+interface FormCategoryProps {
+	type?: "ADD" | "EDIT";
+	data?: Category | null;
+}
+function SubmitButton() {
+	const { pending } = useFormStatus();
+
+	return (
+		<Button
+			variant="secondary"
+			className="bg-blue-900"
+			type="submit"
+			disabled={pending}>
+			{pending ? "Loading..." : "Save Cateogry"}
+		</Button>
+	);
+}
+export default function FormCategory({
+	data = null,
+	type = "ADD",
+}: FormCategoryProps) {
+	const updateCategoryWithId = (_: unknown, formData: FormData) =>
+		updateCategory(_, formData, data?.id);
+	const [state, formAction] = useActionState(
+		type === "ADD" ? postCategory : updateCategoryWithId,
+		initialState
+	);
 	return (
 		<div>
 			<form action={formAction}>
@@ -36,9 +64,7 @@ export default function FormCategory() {
 								</Button>
 								<h1 className="text-2xl font-bold">Category</h1>
 							</div>
-							<Button variant="secondary" className="bg-blue-900" type="submit">
-								Save Category
-							</Button>
+							<SubmitButton></SubmitButton>
 						</div>
 
 						{/* Product Details Card */}
@@ -50,6 +76,15 @@ export default function FormCategory() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent className="space-y-6">
+								{state.error != "" && (
+									<Alert variant="destructive">
+										<AlertCircleIcon />
+										<AlertTitle>Peringatan !!!</AlertTitle>
+										<AlertDescription className="capitalize">
+											{state.error}
+										</AlertDescription>
+									</Alert>
+								)}
 								{/* Name Field */}
 								<div className="space-y-2">
 									<Label
@@ -60,6 +95,7 @@ export default function FormCategory() {
 									<Input
 										id="name"
 										name="name"
+										defaultValue={data?.name}
 										className="bg-neutral-950 border-neutral-800 text-white focus:border-neutral-700 focus:ring-neutral-700 mt-2"
 									/>
 								</div>

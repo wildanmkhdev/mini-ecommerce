@@ -15,3 +15,19 @@ export async function getCategories() {
   }
   
 }
+
+export async function getCategoryById(id:string) {
+try {
+  const category = await prisma.category.findFirst({
+    where : {
+      id:Number.parseInt(id)
+    }
+  })
+  return category
+  
+} catch (error) {
+  console.log(error);
+  
+  
+}
+}
