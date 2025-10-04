@@ -1,7 +1,7 @@
 import React from "react";
 import { getCategoryById } from "../../lib/data";
 import { redirect } from "next/navigation";
-import FormCategory from "../../../_components/form-category";
+import FormCategory from "../../_components/form-category";
 //props params
 
 type Tparams = {

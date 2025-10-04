@@ -15,7 +15,7 @@ import { Label } from "@radix-ui/react-label";
 import { AlertCircleIcon, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
-import postCategory, { updateCategory } from "../categories/lib/actions";
+import postCategory, { updateCategory } from "../lib/actions";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useActionState } from "react";
 import { Category } from "@prisma/client";

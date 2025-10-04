@@ -77,3 +77,24 @@ export async function updateCategory(
 	// Sukses → redirect ke daftar kategori
 	return redirect("/dashboard/categories");
 }
+
+export async function deleteCategory(
+	_: unknown,
+	formData: FormData,
+	id: number
+): Promise<ActionResult> {
+	try {
+		await prisma.category.delete({
+			where: {
+				id,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		return {
+			error: "failde to delet dta",
+		};
+	}
+
+	return redirect("/dashboard/categories");
+}
