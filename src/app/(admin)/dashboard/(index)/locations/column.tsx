@@ -9,7 +9,7 @@ import FormDelete from "./_components/form-delete";
 
 export const columns: ColumnDef<Category>[] = [
 	{
-		accessorKey: "name", // 
+		accessorKey: "name", // ✅ perbaikan typo
 		header: "Category Name",
 	},
 	{
