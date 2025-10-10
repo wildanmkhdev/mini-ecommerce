@@ -35,7 +35,7 @@ function SubmitButton() {
 			className="bg-blue-900"
 			type="submit"
 			disabled={pending}>
-			{pending ? "Loading..." : "Save Cateogry"}
+			{pending ? "Loading..." : "Save Location"}
 		</Button>
 	);
 }
@@ -62,7 +62,7 @@ export default function FormCategory({
 										<ChevronLeft className="w-6 h-6" />
 									</Link>
 								</Button>
-								<h1 className="text-2xl font-bold">Category</h1>
+								<h1 className="text-2xl font-bold">Locations</h1>
 							</div>
 							<SubmitButton></SubmitButton>
 						</div>
@@ -70,7 +70,7 @@ export default function FormCategory({
 						{/* Product Details Card */}
 						<Card className="bg-neutral-900 border-neutral-800">
 							<CardHeader>
-								<CardTitle className="text-2xl">Category Details</CardTitle>
+								<CardTitle className="text-2xl">Locations Details</CardTitle>
 								<CardDescription className="text-neutral-400">
 									Lipsum dolor sit amet, consectetur adipiscing elit
 								</CardDescription>

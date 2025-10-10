@@ -22,9 +22,9 @@ const CategoryPage = async () => {
 		<div>
 			<div className="flex justify-end my-5">
 				<Button size="sm" className="w-[20%]" asChild>
-					<Link href="/dashboard/categories/create">
+					<Link href="/dashboard/locations/create">
 						<PlusIcon className="mr-2 h-4 w-4" />
-						<span>Add Category</span>
+						<span>Add Locations</span>
 					</Link>
 				</Button>
 			</div>

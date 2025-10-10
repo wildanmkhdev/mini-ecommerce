@@ -106,7 +106,7 @@ const data = {
 
 		{
 			title: "Location",
-			url: "/dashboard/location",
+			url: "/dashboard/locations",
 			icon: LocationEdit,
 			items: [
 				{

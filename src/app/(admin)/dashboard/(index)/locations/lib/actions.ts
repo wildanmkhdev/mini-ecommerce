@@ -25,7 +25,7 @@ export default async function postCategory(
 	}
 	// code buat query masukkan data ke datbase melalui prisma yg sudha terlewat validasi
 	try {
-		await prisma.category.create({
+		await prisma.location.create({
 			data: {
 				name: validate.data.name,
 			},
@@ -36,7 +36,7 @@ export default async function postCategory(
 	}
 
 	// Kalau validasi sukses → redirect
-	return redirect("/dashboard/categories");
+	return redirect("/dashboard/locations");
 }
 export async function updateCategory(
 	_: unknown,
@@ -61,7 +61,7 @@ export async function updateCategory(
 	}
 
 	try {
-		await prisma.category.update({
+		await prisma.location.update({
 			where: {
 				id: Number(id),
 			},
@@ -75,7 +75,7 @@ export async function updateCategory(
 	}
 
 	// Sukses → redirect ke daftar kategori
-	return redirect("/dashboard/categories");
+	return redirect("/dashboard/locations");
 }
 
 export async function deleteCategory(
@@ -84,7 +84,7 @@ export async function deleteCategory(
 	id: number
 ): Promise<ActionResult> {
 	try {
-		await prisma.category.delete({
+		await prisma.location.delete({
 			where: {
 				id,
 			},
@@ -96,5 +96,5 @@ export async function deleteCategory(
 		};
 	}
 
-	return redirect("/dashboard/categories");
+	return redirect("/dashboard/locations");
 }
