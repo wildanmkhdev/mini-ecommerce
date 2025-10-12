@@ -4,8 +4,10 @@ import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { columns } from './columns'
+import { getBrands } from './lib/data'
 
-export default function BrandsPage() {
+export default async function BrandsPage() {
+  const brands = await getBrands()
   return (
     <div>
 			<div className="flex justify-end my-5">
@@ -18,7 +20,7 @@ export default function BrandsPage() {
 			</div>
 
 			<div className="border shadow-sm rounded-lg">
-				<DataTable columns={columns} data={[]}></DataTable>
+				<DataTable columns={columns} data={brands}></DataTable>
 			</div>
 		</div>
   )
