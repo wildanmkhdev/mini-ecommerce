@@ -125,7 +125,7 @@ const data = {
 		},
 		{
 			title: "Brand",
-			url: "/dashboard/brand",
+			url: "/dashboard/brands",
 			icon: Building,
 			items: [
 				{
