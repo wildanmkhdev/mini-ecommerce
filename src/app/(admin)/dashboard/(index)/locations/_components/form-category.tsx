@@ -52,7 +52,7 @@ export default function FormCategory({
 	);
 	return (
 		<div>
-			<form action={formAction}>
+			<form action={formAction} encType="multipart/form-data">
 				<div className="min-h-screen bg-neutral-950 text-white p-6">
 					<div className="max-w-4xl mx-auto">
 						{/* Header */}

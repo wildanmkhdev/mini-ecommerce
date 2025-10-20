@@ -6,7 +6,22 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const getImageUrl = (name: string) => {
 	const { data } = supabase.storage
-		.from("belanja-bwa")
+		.from("belanja")
 		.getPublicUrl(`public/brands/${name}`);
 	return data.publicUrl;
+};
+export const uploadFile = async (
+	file: File,
+	path: "brands" | "products" = "brands"
+) => {
+	const fileType = file.type.split("/")[1];
+	const fileName = `${path}-${Date.now()}.${fileType}`;
+
+	await supabase.storage
+		.from("belanja") //samakan bukcet kita di database
+		.upload(`public/${path}/${fileName}`, file, {
+			cacheControl: "3600",
+			upsert: false,
+		});
+	return fileName;
 };

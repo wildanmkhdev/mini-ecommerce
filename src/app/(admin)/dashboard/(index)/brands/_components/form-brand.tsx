@@ -35,7 +35,7 @@ function SubmitButton() {
 	);
 }
 export default function FormBrand() {
-	const [state, formAction] = useFormState(postBrand, initialState);
+	const [state, formAction] = useActionState(postBrand, initialState);
 	return (
 		<div>
 			<form action={formAction}>
