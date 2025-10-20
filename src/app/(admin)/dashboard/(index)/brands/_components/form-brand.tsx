@@ -15,7 +15,12 @@ import { useActionState, useState } from "react";
 
 import { AlertCircleIcon, ChevronLeft, Link } from "lucide-react";
 import React from "react";
-import { useFormStatus } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
+import postBrand from "../lib/action";
+import { ActionResult } from "@/types";
+const initialState: ActionResult = {
+	error: "",
+};
 function SubmitButton() {
 	const { pending } = useFormStatus();
 
@@ -30,12 +35,10 @@ function SubmitButton() {
 	);
 }
 export default function FormBrand() {
-	const [state, setState] = useState({
-		error: "",
-	});
+	const [state, formAction] = useFormState(postBrand, initialState);
 	return (
 		<div>
-			<form action={""}>
+			<form action={formAction}>
 				<div className="min-h-screen bg-neutral-950 text-white p-6">
 					<div className="max-w-4xl mx-auto">
 						{/* Header */}
