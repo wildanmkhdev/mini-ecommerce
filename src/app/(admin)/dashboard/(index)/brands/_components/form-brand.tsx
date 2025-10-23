@@ -11,19 +11,24 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
-import { useActionState, useState } from "react";
-
+import { useActionState } from "react";
 import { AlertCircleIcon, ChevronLeft, Link } from "lucide-react";
-import React from "react";
-import { useFormState, useFormStatus } from "react-dom";
-import postBrand from "../lib/action";
+import { useFormStatus } from "react-dom";
+import postBrand, {
+	updateBrandWithId as updateBrandAction,
+} from "../lib/action"; // ✅ perhatikan ini!
 import { ActionResult } from "@/types";
-const initialState: ActionResult = {
-	error: "",
-};
+import { Brand } from "@prisma/client";
+
+const initialState: ActionResult = { error: "" };
+
+interface FormBrandProps {
+	type?: "ADD" | "EDIT";
+	data?: Brand | null;
+}
+
 function SubmitButton() {
 	const { pending } = useFormStatus();
-
 	return (
 		<Button
 			variant="secondary"
@@ -34,8 +39,19 @@ function SubmitButton() {
 		</Button>
 	);
 }
-export default function FormBrand() {
-	const [state, formAction] = useActionState(postBrand, initialState);
+
+export default function FormBrand({ data, type }: FormBrandProps) {
+	// ✅ Ganti nama fungsi lokal agar tidak bentrok
+	const handleUpdateBrand = async (_: unknown, formData: FormData) => {
+		return await updateBrandAction(_, formData, data?.id ?? 0);
+	};
+
+	// ✅ Pilih fungsi berdasarkan mode (ADD / EDIT)
+	const [state, formAction] = useActionState(
+		type === "ADD" ? postBrand : handleUpdateBrand,
+		initialState
+	);
+
 	return (
 		<div>
 			<form action={formAction}>
@@ -51,19 +67,19 @@ export default function FormBrand() {
 								</Button>
 								<h1 className="text-2xl font-bold">Brand</h1>
 							</div>
-							<SubmitButton></SubmitButton>
+							<SubmitButton />
 						</div>
 
-						{/* Product Details Card */}
+						{/* Brand Details Card */}
 						<Card className="bg-neutral-900 border-neutral-800">
 							<CardHeader>
-								<CardTitle className="text-2xl">Brands Details</CardTitle>
+								<CardTitle className="text-2xl">Brand Details</CardTitle>
 								<CardDescription className="text-neutral-400">
-									Lipsum dolor sit amet, consectetur adipiscing elit
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 								</CardDescription>
 							</CardHeader>
 							<CardContent className="space-y-6">
-								{state.error != "" && (
+								{state.error && (
 									<Alert variant="destructive">
 										<AlertCircleIcon />
 										<AlertTitle>Peringatan !!!</AlertTitle>
@@ -82,9 +98,12 @@ export default function FormBrand() {
 									<Input
 										id="name"
 										name="name"
+										defaultValue={data?.name}
 										className="bg-neutral-950 border-neutral-800 text-white focus:border-neutral-700 focus:ring-neutral-700 mt-2"
 									/>
 								</div>
+
+								{/* Logo Field */}
 								<div className="space-y-2">
 									<Label
 										htmlFor="logo"

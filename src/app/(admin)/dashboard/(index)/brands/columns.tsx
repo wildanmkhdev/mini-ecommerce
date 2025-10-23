@@ -13,15 +13,22 @@ export const columns: ColumnDef<Brand>[] = [
 	{
 		accessorKey: "name", // ✅ perbaikan typo
 		header: "Brand",
-    cell:({row})=>{
-      const brand = row.original
-      return (
-        <div className="inline-flex items-center gap-5">
-<Image src={getImageUrl(brand.logo)} alt="product" width={80} height={80}></Image>
-<span>{brand.name}</span>
-        </div>
-      )
-    }
+		cell: ({ row }) => {
+			const brand = row.original;
+			return (
+				<div className="inline-flex items-center gap-5">
+					<Image
+						src={getImageUrl(brand.logo) ?? "/placeholder.png"}
+						alt={brand.name}
+						width={80}
+						height={80}
+						className="rounded-md object-cover"
+					/>
+
+					<span>{brand.name}</span>
+				</div>
+			);
+		},
 	},
 	{
 		id: "action",
