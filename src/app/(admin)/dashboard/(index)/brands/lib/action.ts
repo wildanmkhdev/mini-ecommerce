@@ -1,10 +1,11 @@
 "use server";
 import { schemaBrand } from "@/lib/schema";
-import { uploadFile } from "@/lib/supabase";
+import { deleteFile, uploadFile } from "@/lib/supabase";
 import { ActionResult } from "@/types";
 import { redirect } from "next/navigation";
 import React from "react";
 import prisma from "../../../../../../../lib/prisma";
+import { log } from "console";
 
 export default async function postBrand(
 	_: unknown,
@@ -78,5 +79,41 @@ export async function updateBrandWithId(
 			error: "failde tu update data",
 		};
 	}
+	return redirect("/dashboard/brands");
+}
+
+export async function deleteBrand(
+	_: unknown,
+	formData: FormData,
+	id: number
+): Promise<ActionResult> {
+	console.log(id);
+	const brand = await prisma.brand.findFirst({
+		where: {
+			id: id,
+		},
+		select: {
+			logo: true,
+		},
+	});
+	if (!brand) {
+		return {
+			error: "brand not found",
+		};
+	}
+	try {
+		deleteFile(brand.logo, "brands");
+		await prisma.brand.delete({
+			where: {
+				id: id,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		return {
+			error: "failed to delete data",
+		};
+	}
+
 	return redirect("/dashboard/brands");
 }

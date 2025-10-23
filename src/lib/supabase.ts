@@ -25,3 +25,9 @@ export const uploadFile = async (
 		});
 	return fileName;
 };
+export const deleteFile = async (
+	filename: string,
+	path: "brands" | "products" = "brands"
+) => {
+	await supabase.storage.from("belanja").remove([`public/${path}/${filename}`]);
+};
