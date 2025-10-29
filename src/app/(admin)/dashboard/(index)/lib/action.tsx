@@ -16,6 +16,7 @@ export async function Logout(
 			error: "authorize",
 		};
 	}
+
 	await lucia.invalidateSession(session.id);
 	const sessionCookie = lucia.createBlankSessionCookie();
 	(await cookies()).set(

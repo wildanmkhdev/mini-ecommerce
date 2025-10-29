@@ -16,6 +16,7 @@ export function rupiahformat(value: number) {
 		currency: "IDR",
 	}).format(value);
 }
+
 export function dateFormat(date: Date | null, format = "DD MMMM") {
 	if (!date) {
 		return dayjs().format(format);
