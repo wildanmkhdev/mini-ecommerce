@@ -5,8 +5,10 @@ import Link from "next/link";
 import React from "react";
 import { getBrands } from "../brands/lib/data";
 import { columns } from "./columns";
+import { getProducts } from "./lib/data";
 
-export default function ProductPage() {
+export default async function ProductPage() {
+	const products = await getProducts();
 	return (
 		<div>
 			<div className="flex justify-end my-5">
@@ -19,7 +21,7 @@ export default function ProductPage() {
 			</div>
 
 			<div className="border shadow-sm rounded-lg">
-				<DataTable columns={columns} data={[]}></DataTable>
+				<DataTable columns={columns} data={[products]}></DataTable>
 			</div>
 		</div>
 	);
