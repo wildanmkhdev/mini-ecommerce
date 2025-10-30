@@ -135,6 +135,7 @@ export default function FormProduct({ brands = [], categories = [], locations = 
 								</div>
 
 								{/* Brand Field */}
+								{/* kleas */}
 								<div className="space-y-2">
 									<Label
 										htmlFor="brand"
