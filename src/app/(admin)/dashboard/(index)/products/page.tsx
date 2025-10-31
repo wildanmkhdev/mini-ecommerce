@@ -21,7 +21,7 @@ export default async function ProductPage() {
 			</div>
 
 			<div className="border shadow-sm rounded-lg">
-				<DataTable columns={columns} data={[products]}></DataTable>
+				{/* <DataTable columns={columns} data={[products]}></DataTable> */}
 			</div>
 		</div>
 	);

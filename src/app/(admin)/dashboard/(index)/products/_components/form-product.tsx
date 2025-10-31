@@ -24,6 +24,7 @@ import { AlertCircleIcon, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useFormStatus } from "react-dom";
+import UploadImages from "./upload-images";
 
 function SubmitButton() {
 	const { pending } = useFormStatus();
@@ -247,32 +248,7 @@ export default function FormProduct({
 							</Card>
 
 							{/* Product Images Card */}
-							<Card className="bg-[#111118] border-neutral-800">
-								<CardHeader>
-									<CardTitle className="text-xl font-semibold">
-										Product Images
-									</CardTitle>
-									<CardDescription className="text-neutral-400 text-sm">
-										Lipsum dolor sit amet, consectetur adipiscing elit
-									</CardDescription>
-								</CardHeader>
-								<CardContent className="space-y-4">
-									{/* Upload Field */}
-									<div className="space-y-2">
-										<Input
-											id="image"
-											type="file"
-											name="image"
-											accept="image/*"
-											multiple
-											className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600 file:bg-neutral-800 file:border-0 file:text-white file:mr-4 file:py-2 file:px-4 file:rounded"
-										/>
-										<p className="text-xs text-neutral-500">
-											Format: JPG, PNG, atau WEBP (Max 5MB)
-										</p>
-									</div>
-								</CardContent>
-							</Card>
+							<UploadImages></UploadImages>
 						</div>
 					</div>
 				</div>
