@@ -10,7 +10,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-label";
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -18,6 +18,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { AlertCircleIcon, ChevronLeft } from "lucide-react";
 
 import Link from "next/link";
@@ -28,8 +29,7 @@ function SubmitButton() {
 	const { pending } = useFormStatus();
 	return (
 		<Button
-			variant="secondary"
-			className="bg-blue-900"
+			className="bg-blue-600 hover:bg-blue-700"
 			type="submit"
 			disabled={pending}>
 			{pending ? "Loading..." : "Save Product"}
@@ -43,181 +43,237 @@ interface FormProductProps {
 	locations?: Array<{ id: string; name: string }>;
 }
 
-export default function FormProduct({ brands = [], categories = [], locations = [] }: FormProductProps) {
+export default function FormProduct({
+	brands = [],
+	categories = [],
+	locations = [],
+}: FormProductProps) {
 	return (
-		<div>
+		<div className="min-h-screen bg-[#0a0a0f] text-white p-6">
 			<form action="">
-				<div className="min-h-screen bg-neutral-950 text-white p-6">
-					<div className="max-w-4xl mx-auto">
-						{/* Header */}
-						<div className="flex items-center justify-between mb-8">
-							<div className="flex items-center gap-4">
-								<Button className="p-2 transition-colors">
-									<Link href="/dashboard/products">
-										<ChevronLeft className="w-6 h-6" />
-									</Link>
-								</Button>
-								<h1 className="text-2xl font-bold">Product</h1>
-							</div>
+				<div className="max-w-7xl mx-auto">
+					{/* Header */}
+					<div className="flex items-center justify-between mb-8">
+						<div className="flex items-center gap-4">
+							<Button
+								variant="ghost"
+								className="p-2 hover:bg-neutral-800"
+								type="button">
+								<Link href="/dashboard/products">
+									<ChevronLeft className="w-6 h-6" />
+								</Link>
+							</Button>
+							<h1 className="text-2xl font-bold">Add Product</h1>
+						</div>
+						<div className="flex gap-3">
+							<Button
+								variant="outline"
+								className="border-neutral-700 text-white hover:bg-neutral-800"
+								type="button">
+								Discard
+							</Button>
 							<SubmitButton />
 						</div>
+					</div>
 
-						{/* Product Details Card */}
-						<Card className="bg-neutral-900 border-neutral-800">
-							<CardHeader>
-								<CardTitle className="text-2xl">Product Details</CardTitle>
-								<CardDescription className="text-neutral-400">
-									Isi informasi lengkap tentang produk yang akan ditambahkan.
-								</CardDescription>
-							</CardHeader>
-							<CardContent className="space-y-6">
-								{/* {state.error && (
-									<Alert variant="destructive">
-										<AlertCircleIcon />
-										<AlertTitle>Peringatan !!!</AlertTitle>
-										<AlertDescription className="capitalize">
-											{state.error}
-										</AlertDescription>
-									</Alert>
-								)} */}
+					{/* Two Column Layout */}
+					<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+						{/* Left Column - Product Details & Category */}
+						<div className="lg:col-span-2 space-y-6">
+							{/* Product Details Card */}
+							<Card className="bg-[#111118] border-neutral-800">
+								<CardHeader>
+									<CardTitle className="text-xl font-semibold">
+										Product Details
+									</CardTitle>
+									<CardDescription className="text-neutral-400 text-sm">
+										Lipsum dolor sit amet, consectetur adipiscing elit
+									</CardDescription>
+								</CardHeader>
+								<CardContent className="space-y-5">
+									{/* Name Field */}
+									<div className="space-y-2">
+										<Label htmlFor="name" className="text-sm font-medium">
+											Name
+										</Label>
+										<Input
+											id="name"
+											name="name"
+											placeholder=""
+											required
+											className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600"
+										/>
+									</div>
 
-								{/* Name Field */}
-								<div className="space-y-2">
-									<Label
-										htmlFor="name"
-										className="text-sm font-medium text-neutral-200">
-										Nama Produk
-									</Label>
-									<Input
-										id="name"
-										name="name"
-										placeholder="Masukkan nama produk"
-										required
-										className="bg-neutral-950 border-neutral-800 text-white focus:border-neutral-700 focus:ring-neutral-700 mt-2"
-									/>
-								</div>
+									{/* Description Field */}
+									<div className="space-y-2">
+										<Label
+											htmlFor="description"
+											className="text-sm font-medium">
+											Description
+										</Label>
+										<Textarea
+											id="description"
+											name="description"
+											placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies ultricies, nunc nisl ultricies nunc, nec ultricies nunc nisl nec nunc."
+											rows={5}
+											className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600 resize-none"
+										/>
+									</div>
+								</CardContent>
+							</Card>
 
-								{/* Price Field */}
-								<div className="space-y-2">
-									<Label
-										htmlFor="price"
-										className="text-sm font-medium text-neutral-200">
-										Harga
-									</Label>
-									<Input
-										id="price"
-										name="price"
-										type="number"
-										min="0"
-										step="0.01"
-										placeholder="0"
-										required
-										className="bg-neutral-950 border-neutral-800 text-white focus:border-neutral-700 focus:ring-neutral-700 mt-2"
-									/>
-								</div>
+							{/* Product Category Card */}
+							<Card className="bg-[#111118] border-neutral-800">
+								<CardHeader>
+									<CardTitle className="text-xl font-semibold">
+										Product Category
+									</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+										{/* Category Field */}
+										<div className="space-y-2">
+											<Label htmlFor="category" className="text-sm font-medium">
+												Category
+											</Label>
+											<Select name="category_id" required>
+												<SelectTrigger className="bg-[#0a0a0f] border-blue-600 text-white focus:border-blue-600 focus:ring-blue-600">
+													<SelectValue placeholder="Select category" />
+												</SelectTrigger>
+												<SelectContent className="bg-[#111118] border-neutral-800">
+													{categories.map((category) => (
+														<SelectItem
+															key={category.id}
+															value={category.id}
+															className="text-white focus:bg-neutral-800">
+															{category.name}
+														</SelectItem>
+													))}
+												</SelectContent>
+											</Select>
+										</div>
 
-								{/* Stock Field */}
-								<div className="space-y-2">
-									<Label
-										htmlFor="stock"
-										className="text-sm font-medium text-neutral-200">
-										Stok
-									</Label>
-									<Input
-										id="stock"
-										name="stock"
-										type="number"
-										min="0"
-										placeholder="0"
-										required
-										className="bg-neutral-950 border-neutral-800 text-white focus:border-neutral-700 focus:ring-neutral-700 mt-2"
-									/>
-								</div>
+										{/* Brand Field */}
+										<div className="space-y-2">
+											<Label htmlFor="brand" className="text-sm font-medium">
+												Brand
+											</Label>
+											<Select name="brand_id" required>
+												<SelectTrigger className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600">
+													<SelectValue placeholder="Select brand" />
+												</SelectTrigger>
+												<SelectContent className="bg-[#111118] border-neutral-800">
+													{brands.map((brand) => (
+														<SelectItem
+															key={brand.id}
+															value={brand.id}
+															className="text-white focus:bg-neutral-800">
+															{brand.name}
+														</SelectItem>
+													))}
+												</SelectContent>
+											</Select>
+										</div>
 
-								{/* Brand Field */}
-								{/* kleas */}
-								<div className="space-y-2">
-									<Label
-										htmlFor="brand"
-										className="text-sm font-medium text-neutral-200">
-										Brand
-									</Label>
-									<Select name="brand_id" required>
-										<SelectTrigger className="bg-neutral-950 border-neutral-800 text-white focus:border-neutral-700 focus:ring-neutral-700 mt-2">
-											<SelectValue placeholder="Pilih brand" />
-										</SelectTrigger>
-										<SelectContent className="bg-neutral-950 border-neutral-800">
-											{brands.map((brand) => (
-												<SelectItem key={brand.id} value={brand.id}>
-													{brand.name}
+										{/* Location Field */}
+										<div className="space-y-2">
+											<Label htmlFor="location" className="text-sm font-medium">
+												Location
+											</Label>
+											<Select name="location_id" required>
+												<SelectTrigger className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600">
+													<SelectValue placeholder="Select location" />
+												</SelectTrigger>
+												<SelectContent className="bg-[#111118] border-neutral-800">
+													{locations.map((location) => (
+														<SelectItem
+															key={location.id}
+															value={location.id}
+															className="text-white focus:bg-neutral-800">
+															{location.name}
+														</SelectItem>
+													))}
+												</SelectContent>
+											</Select>
+										</div>
+									</div>
+								</CardContent>
+							</Card>
+						</div>
+
+						{/* Right Column - Status & Images */}
+						<div className="space-y-6">
+							{/* Product Status Card */}
+							<Card className="bg-[#111118] border-neutral-800">
+								<CardHeader>
+									<CardTitle className="text-xl font-semibold">
+										Product Status
+									</CardTitle>
+									<CardDescription className="text-neutral-400 text-sm">
+										Lipsum dolor sit amet, consectetur adipiscing elit
+									</CardDescription>
+								</CardHeader>
+								<CardContent className="space-y-4">
+									{/* Status Field */}
+									<div className="space-y-2">
+										<Label htmlFor="status" className="text-sm font-medium">
+											Status
+										</Label>
+										<Select name="status" required>
+											<SelectTrigger className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600">
+												<SelectValue placeholder="Select status" />
+											</SelectTrigger>
+											<SelectContent className="bg-[#111118] border-neutral-800">
+												<SelectItem
+													value="active"
+													className="text-white focus:bg-neutral-800">
+													Active
 												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								</div>
-
-								{/* Category Field */}
-								<div className="space-y-2">
-									<Label
-										htmlFor="category"
-										className="text-sm font-medium text-neutral-200">
-										Kategori
-									</Label>
-									<Select name="category_id" required>
-										<SelectTrigger className="bg-neutral-950 border-neutral-800 text-white focus:border-neutral-700 focus:ring-neutral-700 mt-2">
-											<SelectValue placeholder="Pilih kategori" />
-										</SelectTrigger>
-										<SelectContent className="bg-neutral-950 border-neutral-800">
-											{categories.map((category) => (
-												<SelectItem key={category.id} value={category.id}>
-													{category.name}
+												<SelectItem
+													value="draft"
+													className="text-white focus:bg-neutral-800">
+													Draft
 												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								</div>
-
-								{/* Location Field */}
-								<div className="space-y-2">
-									<Label
-										htmlFor="location"
-										className="text-sm font-medium text-neutral-200">
-										Lokasi
-									</Label>
-									<Select name="location_id" required>
-										<SelectTrigger className="bg-neutral-950 border-neutral-800 text-white focus:border-neutral-700 focus:ring-neutral-700 mt-2">
-											<SelectValue placeholder="Pilih lokasi" />
-										</SelectTrigger>
-										<SelectContent className="bg-neutral-950 border-neutral-800">
-											{locations.map((location) => (
-												<SelectItem key={location.id} value={location.id}>
-													{location.name}
+												<SelectItem
+													value="archived"
+													className="text-white focus:bg-neutral-800">
+													Archived
 												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								</div>
+											</SelectContent>
+										</Select>
+									</div>
+								</CardContent>
+							</Card>
 
-								{/* Image Field */}
-								<div className="space-y-2">
-									<Label
-										htmlFor="image"
-										className="text-sm font-medium text-neutral-200">
-										Gambar Produk
-									</Label>
-									<Input
-										id="image"
-										type="file"
-										name="image"
-										accept="image/*"
-										className="bg-neutral-950 border-neutral-800 text-white focus:border-neutral-700 focus:ring-neutral-700 mt-2"
-									/>
-									<p className="text-xs text-neutral-500">
-										Format: JPG, PNG, atau WEBP (Max 5MB)
-									</p>
-								</div>
-							</CardContent>
-						</Card>
+							{/* Product Images Card */}
+							<Card className="bg-[#111118] border-neutral-800">
+								<CardHeader>
+									<CardTitle className="text-xl font-semibold">
+										Product Images
+									</CardTitle>
+									<CardDescription className="text-neutral-400 text-sm">
+										Lipsum dolor sit amet, consectetur adipiscing elit
+									</CardDescription>
+								</CardHeader>
+								<CardContent className="space-y-4">
+									{/* Upload Field */}
+									<div className="space-y-2">
+										<Input
+											id="image"
+											type="file"
+											name="image"
+											accept="image/*"
+											multiple
+											className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600 file:bg-neutral-800 file:border-0 file:text-white file:mr-4 file:py-2 file:px-4 file:rounded"
+										/>
+										<p className="text-xs text-neutral-500">
+											Format: JPG, PNG, atau WEBP (Max 5MB)
+										</p>
+									</div>
+								</CardContent>
+							</Card>
+						</div>
 					</div>
 				</div>
 			</form>
