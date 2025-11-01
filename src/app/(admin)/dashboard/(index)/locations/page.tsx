@@ -13,11 +13,11 @@ import {
 import { DeleteIcon, PlusIcon, Trash2Icon } from "lucide-react";
 import React from "react";
 import { columns } from "./column";
-import { getCategories } from "./lib/data";
+import { getLocations } from "./lib/data";
 import Link from "next/link";
 
 const CategoryPage = async () => {
-	const data = await getCategories();
+	const data = await getLocations();
 	return (
 		<div>
 			<div className="flex justify-end my-5">
