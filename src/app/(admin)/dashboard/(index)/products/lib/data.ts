@@ -7,7 +7,7 @@ export async function getProducts() {
 			orderBy: { name: "asc" },
 			select: {
 				id: true,
-				_count: { select: { orders: true } },
+				_count: { select: { orderItems: true } },
 				name: true,
 				created_at: true,
 				price: true,
@@ -15,7 +15,7 @@ export async function getProducts() {
 				category: { select: { name: true } },
 				brand: { select: { name: true } },
 				location: { select: { name: true } },
-				image: true,
+				images: true,
 			},
 		});
 
@@ -24,10 +24,13 @@ export async function getProducts() {
 			name: product.name,
 			price: Number(product.price) || 0,
 			stock: product.stock ?? 0,
-			total_sales: product._count.orders ?? 0,
+			total_sales: product._count.orderItems ?? 0,
 			brand_name: product.brand?.name || "-",
 			category_name: product.category?.name || "-",
-			image_url: product.image || "",
+		image_url: Array.isArray(product.images)
+				? product.images[0]
+				: product.images || "",
+
 			createdAt: product.created_at,
 		}));
 

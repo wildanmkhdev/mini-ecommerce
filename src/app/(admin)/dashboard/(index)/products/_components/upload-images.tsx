@@ -10,19 +10,19 @@ import {
 } from "@/components/ui/card";
 
 export default function UploadImages() {
-  //ref disini itu ibarat referesni bauat ngambi inputan pengguna
+	//ref disini itu ibarat referesni bauat ngambi inputan pengguna
 	const ref = useRef<HTMLInputElement>(null);
 	const thumbnailRef = useRef<HTMLImageElement>(null);
 	const imageFirstRef = useRef<HTMLImageElement>(null);
 	const imageSecondRef = useRef<HTMLImageElement>(null);
-  //jika input refreni ad jalanka fungsi itu
-  // fngsu cek pop up untuk pillih filder
+	//jika input refreni ad jalanka fungsi itu
+	// fngsu cek pop up untuk pillih filder
 	const openFolder = () => {
 		if (ref.current) {
 			ref.current.click();
 		}
 	};
-  // jika tidak ad data thumnail kembaikan return kosong
+	// jika tidak ad data thumnail kembaikan return kosong
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (
 			!thumbnailRef.current ||
@@ -92,7 +92,7 @@ export default function UploadImages() {
 						id="image"
 						ref={ref}
 						type="file"
-						name="image"
+						name="images"
 						accept="image/*"
 						multiple
 						className="hidden"

@@ -20,14 +20,20 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertCircleIcon, ChevronLeft } from "lucide-react";
-
 import Link from "next/link";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import UploadImages from "./upload-images";
+import { ActionResult } from "@/types";
+import { storeProduct } from "../lib/action";
+
 interface FormProductProps {
-	children: ReactNode;
+	children?: ReactNode;
 }
+
+const initialState: ActionResult = {
+	error: "",
+};
 
 function SubmitButton() {
 	const { pending } = useFormStatus();
@@ -41,16 +47,12 @@ function SubmitButton() {
 	);
 }
 
-interface FormProductProps {
-	brands?: Array<{ id: string; name: string }>;
-	categories?: Array<{ id: string; name: string }>;
-	locations?: Array<{ id: string; name: string }>;
-}
-
 export default function FormProduct({ children }: FormProductProps) {
+	const [state, formAction] = useActionState(storeProduct, initialState);
+
 	return (
 		<div className="min-h-screen bg-[#0a0a0f] text-white p-6">
-			<form action="">
+			<form action={formAction} encType="multipart/form-data">
 				<div className="max-w-7xl mx-auto">
 					{/* Header */}
 					<div className="flex items-center justify-between mb-8">
@@ -87,36 +89,50 @@ export default function FormProduct({ children }: FormProductProps) {
 										Product Details
 									</CardTitle>
 									<CardDescription className="text-neutral-400 text-sm">
-										Lipsum dolor sit amet, consectetur adipiscing elit
+										Enter product information correctly.
 									</CardDescription>
 								</CardHeader>
 								<CardContent className="space-y-5">
+									{state.error && (
+										<Alert variant="destructive">
+											<AlertCircleIcon />
+											<AlertTitle>Peringatan !!!</AlertTitle>
+											<AlertDescription className="capitalize">
+												{state.error}
+											</AlertDescription>
+										</Alert>
+									)}
 									{/* Name Field */}
 									<div className="space-y-2">
-										<Label htmlFor="name" className="text-sm font-medium">
-											Name
-										</Label>
+										<Label htmlFor="name">Name</Label>
 										<Input
 											id="name"
 											name="name"
-											placeholder=""
 											required
-											className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600"
+											className="bg-[#0a0a0f] border-neutral-800 text-white"
+										/>
+									</div>
+
+									{/* Price Field */}
+									<div className="space-y-2">
+										<Label htmlFor="price">Price</Label>
+										<Input
+											id="price"
+											name="price"
+											type="number"
+											required
+											className="bg-[#0a0a0f] border-neutral-800 text-white"
 										/>
 									</div>
 
 									{/* Description Field */}
 									<div className="space-y-2">
-										<Label
-											htmlFor="description"
-											className="text-sm font-medium">
-											Description
-										</Label>
+										<Label htmlFor="description">Description</Label>
 										<Textarea
 											id="description"
 											name="description"
-											rows={5}
-											className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600 resize-none"
+											rows={4}
+											className="bg-[#0a0a0f] border-neutral-800 text-white resize-none"
 										/>
 									</div>
 								</CardContent>
@@ -128,45 +144,32 @@ export default function FormProduct({ children }: FormProductProps) {
 
 						{/* Right Column - Status & Images */}
 						<div className="space-y-6">
-							{/* Product Status Card */}
+							{/* Product Status */}
 							<Card className="bg-[#111118] border-neutral-800">
 								<CardHeader>
-									<CardTitle className="text-xl font-semibold">
-										Product Status
-									</CardTitle>
+									<CardTitle>Product Status</CardTitle>
 									<CardDescription className="text-neutral-400 text-sm">
-										Lipsum dolor sit amet, consectetur adipiscing elit
+										Set the stock status
 									</CardDescription>
 								</CardHeader>
 								<CardContent className="space-y-4">
-									{/* Status Field */}
 									<div className="space-y-2">
-										<Label htmlFor="status" className="text-sm font-medium">
-											Status
-										</Label>
+										<Label htmlFor="stock">Status</Label>
 										<Select name="stock" required>
-											<SelectTrigger className="bg-[#0a0a0f] border-neutral-800 text-white focus:border-blue-600 focus:ring-blue-600">
+											<SelectTrigger className="bg-[#0a0a0f] border-neutral-800 text-white">
 												<SelectValue placeholder="Select status" />
 											</SelectTrigger>
 											<SelectContent className="bg-[#111118] border-neutral-800">
-												<SelectItem
-													value="ready"
-													className="text-white focus:bg-neutral-800">
-													Ready
-												</SelectItem>
-												<SelectItem
-													value="preorder"
-													className="text-white focus:bg-neutral-800">
-													preorder
-												</SelectItem>
+												<SelectItem value="ready">Ready</SelectItem>
+												<SelectItem value="preorder">Preorder</SelectItem>
 											</SelectContent>
 										</Select>
 									</div>
 								</CardContent>
 							</Card>
 
-							{/* Product Images Card */}
-							<UploadImages></UploadImages>
+							{/* Product Images */}
+							<UploadImages />
 						</div>
 					</div>
 				</div>

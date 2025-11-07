@@ -3,11 +3,14 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 // Create a single supabase client for interacting with your database
 const supabase = createClient(supabaseUrl, supabaseKey);
-//fungsi untuk ambil gambar dari supabase stoange dari bucket dengan nama belanja 
-export const getImageUrl = (name: string) => {
+//fungsi untuk ambil gambar dari supabase stoange dari bucket dengan nama belanja
+export const getImageUrl = (
+	name: string,
+	path: "brands" | "products" = "brands"
+) => {
 	const { data } = supabase.storage
 		.from("belanja")
-		.getPublicUrl(`public/brands/${name}`);
+		.getPublicUrl(`public/${path}/${name}`);
 	return data.publicUrl;
 };
 // fungsi untuk upload file ke buckedt belanja
@@ -26,7 +29,7 @@ export const uploadFile = async (
 		});
 	return fileName;
 };
-//fungsi hapus file dari bucket belanja 
+//fungsi hapus file dari bucket belanja
 export const deleteFile = async (
 	filename: string,
 	path: "brands" | "products" = "brands"

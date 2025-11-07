@@ -76,7 +76,7 @@ model Product {
   location    Location       @relation(fields: [location_id], references: [id])
   name        String         @db.VarChar(255)
   description String
-  price       String // di ERD varchar
+  price       Int// di ERD varchar
   stock       ProductStock
   images      String[]
   orderItems  OrderProduct[]
