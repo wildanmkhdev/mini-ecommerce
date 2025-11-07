@@ -55,3 +55,11 @@ export const schemaProduct = z.object({
 			{ message: "uploaded file should be jpg/jpeg/png" }
 		),
 });
+
+export const schemaProductEdit = schemaProduct
+	.extend({
+		id: z.number({
+			required_error: "product ",
+		}),
+	})
+	.omit({ image: true });

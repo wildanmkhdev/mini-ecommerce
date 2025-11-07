@@ -1,6 +1,6 @@
 "use server";
 
-import { schemaProduct } from "@/lib/schema";
+import { schemaProduct, schemaProductEdit } from "@/lib/schema";
 import { uploadFile } from "@/lib/supabase";
 import { ActionResult } from "@/types";
 import { redirect } from "next/navigation";
@@ -66,5 +66,77 @@ export async function storeProduct(
 	}
 
 	// ✅ Redirect setelah sukses
+	return redirect("/dashboard/products");
+}
+export async function updateProduct(
+	_: unknown,
+	formData: FormData,
+	id: number
+): Promise<ActionResult> {
+	const parse = schemaProductEdit.safeParse({
+		name: formData.get("name"),
+		price: formData.get("price"),
+		description: formData.get("description"),
+		brand_id: formData.get("brand_id"),
+		category_id: formData.get("category_id"),
+		location_id: formData.get("location_id"),
+		stock: formData.get("stock"),
+	});
+
+	// ✅ Validasi jika gagal parse
+	if (!parse.success) {
+		console.error("❌ PRODUCT VALIDATION FAILED:");
+		console.error(parse.error.flatten());
+		console.error(
+			"🧩 FormData received:",
+			Object.fromEntries(formData.entries())
+		);
+	}
+	const product = await prisma.product.findFirst({
+		where: {
+			id: id,
+		},
+	});
+	if (!product) {
+		return {
+			error: "product not found",
+		};
+	}
+	const uploaded_images = formData.getAll("images") as File[];
+	const filenames = product.images;
+	if (uploaded_images.length === 3) {
+		const parseImages = schemaProduct.pick({ images: true }).safeParse({
+			images: uploaded_images,
+		});
+		if (!parseImages.success) {
+			return {
+				error: "failed to upload images",
+			};
+		}
+		for (const image of uploaded_images) {
+			if (image instanceof File) {
+				const filename = await uploadFile(image, "products");
+				filenames.push(filename);
+			}
+		}
+	}
+	try {
+		await prisma.product.update({
+			where: {
+				id: id,
+			},
+			data: {
+				name: formData.get("name") as string,
+				price: Number(formData.get("price")),
+				description: formData.get("description") as string,
+				brand_id: Number(formData.get("brand_id")),
+				category_id: Number(formData.get("category_id")),
+				location_id: Number(formData.get("location_id")),
+				stock: formData.get("stock") as any, // tergantung tipe enum ProductStock
+			},
+		});
+	} catch (error) {
+		console.error("Failed to update product:", error);
+	}
 	return redirect("/dashboard/products");
 }
