@@ -81,6 +81,7 @@ export async function updateProduct(
 		category_id: formData.get("category_id"),
 		location_id: formData.get("location_id"),
 		stock: formData.get("stock"),
+		id: id,
 	});
 
 	// ✅ Validasi jika gagal parse

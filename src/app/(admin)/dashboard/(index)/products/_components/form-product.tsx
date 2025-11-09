@@ -25,10 +25,13 @@ import React, { ReactNode, useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import UploadImages from "./upload-images";
 import { ActionResult } from "@/types";
-import { storeProduct } from "../lib/action";
+import { storeProduct, updateProduct } from "../lib/action";
+import { Product } from "@prisma/client";
 
 interface FormProductProps {
 	children?: ReactNode;
+	type: "ADD" | "EDIT";
+	data?: Product | null;
 }
 
 const initialState: ActionResult = {
@@ -47,8 +50,18 @@ function SubmitButton() {
 	);
 }
 
-export default function FormProduct({ children }: FormProductProps) {
-	const [state, formAction] = useActionState(storeProduct, initialState);
+export default function FormProduct({
+	children,
+	type,
+	data,
+}: FormProductProps) {
+	const updateProductWithId = (_: unknown, formData: FormData) =>
+		updateProduct(_, formData, data?.id ?? 0);
+
+	const [state, formAction] = useActionState(
+		type === "ADD" ? storeProduct : updateProductWithId,
+		initialState
+	);
 
 	return (
 		<div className="min-h-screen bg-[#0a0a0f] text-white p-6">
@@ -108,6 +121,7 @@ export default function FormProduct({ children }: FormProductProps) {
 										<Input
 											id="name"
 											name="name"
+											defaultValue={data?.name}
 											required
 											className="bg-[#0a0a0f] border-neutral-800 text-white"
 										/>
@@ -120,6 +134,7 @@ export default function FormProduct({ children }: FormProductProps) {
 											id="price"
 											name="price"
 											type="number"
+											defaultValue={data?.price}
 											required
 											className="bg-[#0a0a0f] border-neutral-800 text-white"
 										/>
@@ -131,6 +146,7 @@ export default function FormProduct({ children }: FormProductProps) {
 										<Textarea
 											id="description"
 											name="description"
+											defaultValue={data?.description}
 											rows={4}
 											className="bg-[#0a0a0f] border-neutral-800 text-white resize-none"
 										/>
@@ -155,7 +171,7 @@ export default function FormProduct({ children }: FormProductProps) {
 								<CardContent className="space-y-4">
 									<div className="space-y-2">
 										<Label htmlFor="stock">Status</Label>
-										<Select name="stock" required>
+										<Select name="stock" required defaultValue={data?.stock}>
 											<SelectTrigger className="bg-[#0a0a0f] border-neutral-800 text-white">
 												<SelectValue placeholder="Select status" />
 											</SelectTrigger>

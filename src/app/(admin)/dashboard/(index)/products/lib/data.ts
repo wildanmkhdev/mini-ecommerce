@@ -27,7 +27,7 @@ export async function getProducts() {
 			total_sales: product._count.orderItems ?? 0,
 			brand_name: product.brand?.name || "-",
 			category_name: product.category?.name || "-",
-		image_url: Array.isArray(product.images)
+			image_url: Array.isArray(product.images)
 				? product.images[0]
 				: product.images || "",
 
@@ -38,5 +38,18 @@ export async function getProducts() {
 	} catch (error) {
 		console.error("Failed to fetch products:", error);
 		return [];
+	}
+}
+export async function getProductById(id: number) {
+	try {
+		const product = await prisma.product.findFirst({
+			where: {
+				id: id,
+			},
+		});
+		return product;
+	} catch (error) {
+		console.log(error);
+		return null;
 	}
 }
