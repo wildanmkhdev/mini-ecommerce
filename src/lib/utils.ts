@@ -17,11 +17,11 @@ export function rupiahformat(value: number) {
 	}).format(value);
 }
 
-export function dateFormat(date: Date | null, format = "DD MMMM") {
+export function dateFormat(date: Date | null, format = "DD MMMM YYYY") {
 	if (!date) {
 		return dayjs().format(format);
 	}
-	return dayjs(date).format;
+	return dayjs(date).format(format);
 }
 
 // Contoh penggunaan di komponen React:

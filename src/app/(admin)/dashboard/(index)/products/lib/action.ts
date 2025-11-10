@@ -104,7 +104,7 @@ export async function updateProduct(
 		};
 	}
 	const uploaded_images = formData.getAll("images") as File[];
-	const filenames = product.images;
+	let filenames = [];
 	if (uploaded_images.length === 3) {
 		const parseImages = schemaProduct.pick({ images: true }).safeParse({
 			images: uploaded_images,
@@ -120,6 +120,8 @@ export async function updateProduct(
 				filenames.push(filename);
 			}
 		}
+	} else {
+		filenames = product.images;
 	}
 	try {
 		await prisma.product.update({
@@ -134,6 +136,7 @@ export async function updateProduct(
 				category_id: Number(formData.get("category_id")),
 				location_id: Number(formData.get("location_id")),
 				stock: formData.get("stock") as any, // tergantung tipe enum ProductStock
+				images: filenames,
 			},
 		});
 	} catch (error) {

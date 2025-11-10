@@ -62,4 +62,4 @@ export const schemaProductEdit = schemaProduct
 			required_error: "product ",
 		}),
 	})
-	.omit({ image: true });
+	.omit({ images: true });

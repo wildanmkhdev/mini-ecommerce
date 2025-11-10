@@ -31,7 +31,7 @@ export async function getProducts() {
 				? product.images[0]
 				: product.images || "",
 
-			createdAt: product.created_at,
+			created_at: product.created_at,
 		}));
 
 		return response_products;

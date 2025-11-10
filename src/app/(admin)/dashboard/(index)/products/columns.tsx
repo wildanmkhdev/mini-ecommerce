@@ -18,7 +18,7 @@ export type TColumn = {
 	price: number;
 	total_sales: number;
 	stock: ProductStock;
-	createdAt: Date;
+	created_at: Date;
 };
 export const columns: ColumnDef<TColumn>[] = [
 	{
@@ -64,11 +64,11 @@ export const columns: ColumnDef<TColumn>[] = [
 		header: "Total sales",
 	},
 	{
-		accessorKey: "createdAt",
+		accessorKey: "created_At",
 		header: "Created AT",
 		cell: ({ row }) => {
 			const product = row.original;
-			return dateFormat(product.createdAt);
+			return dateFormat(product.created_at);
 		},
 	},
 	{
@@ -77,11 +77,11 @@ export const columns: ColumnDef<TColumn>[] = [
 			const product = row.original;
 			return (
 				<div className="space-x-5 inline-flex">
-					<Button size="sm" variant="secondary" asChild>
-						<Link href={`/dashboard/products/edit/${product.id}`}>
+					<Link href={`/dashboard/products/edit/${product.id}`}>
+						<Button size="sm" variant="secondary">
 							<Edit className="w-4 h-4 " /> Edit
-						</Link>
-					</Button>
+						</Button>
+					</Link>
 					{/* <FormDelete id={brand.id}></FormDelete> */}
 				</div>
 			);
