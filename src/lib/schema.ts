@@ -63,3 +63,9 @@ export const schemaProductEdit = schemaProduct
 		}),
 	})
 	.omit({ images: true });
+
+export const schemaSignUp = schemaSignIn.extend({
+	name: z
+		.string({ required_error: "name is required" })
+		.min(4, { message: "name minimal 4 karakter" }),
+});

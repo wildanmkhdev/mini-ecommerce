@@ -3,6 +3,7 @@ import { ActionResult } from "@/types";
 import { useActionState } from "react";
 import { signIn } from "../lib/action";
 import { useFormStatus } from "react-dom";
+import Link from "next/link";
 
 const initialFormState: ActionResult = {
 	error: "",
@@ -79,11 +80,11 @@ export default function SignInPage() {
 					</div>
 					<div className="flex flex-col gap-3">
 						<SubmitButton></SubmitButton>
-						<a
-							href="signup.html"
+						<Link
+							href="/sign-up"
 							className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]">
 							Sign Up
-						</a>
+						</Link>
 					</div>
 				</form>
 			</div>
