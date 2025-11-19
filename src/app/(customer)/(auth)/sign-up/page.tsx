@@ -4,7 +4,6 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { signUp } from "../lib/action";
 import Link from "next/link";
-import { error } from "console";
 const initialFormState: ActionResult = {
 	error: "",
 };
