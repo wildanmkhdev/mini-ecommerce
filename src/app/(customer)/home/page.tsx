@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Category from "./components/Category";
 import Product from "./components/Product";
@@ -139,8 +139,11 @@ export default function LandingPage() {
 			<section
 				id="content"
 				className="container max-w-[1130px] mx-auto flex flex-col gap-[50px] pt-[50px] pb-[100px]">
+<Suspense fallback={<span>Loadingg....</span>}> 
 				<Category></Category>
-				<Product
+
+</Suspense>				
+<Product
 					title={
 						<>
 							Most Picked <br /> Quality Products
