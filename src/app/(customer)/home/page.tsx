@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Category from "./components/Category";
 import Product from "./components/Product";
 import Brand from "./components/Brand";
+import Footer from "./components/Footer";
 
 export default function LandingPage() {
 	return (
@@ -139,17 +140,18 @@ export default function LandingPage() {
 			<section
 				id="content"
 				className="container max-w-[1130px] mx-auto flex flex-col gap-[50px] pt-[50px] pb-[100px]">
-<Suspense fallback={<span>Loadingg....</span>}> 
-				<Category></Category>
-
-</Suspense>				
-<Product
+				<Suspense fallback={<span>Loadingg....</span>}>
+					<Category></Category>
+				</Suspense>
+				<Product
 					title={
 						<>
 							Most Picked <br /> Quality Products
 						</>
 					}></Product>
-				<Brand></Brand>
+				<Suspense fallback={<span>Loadingg....</span>}>
+					<Brand></Brand>
+				</Suspense>
 
 				<Product
 					title={
@@ -158,6 +160,7 @@ export default function LandingPage() {
 						</>
 					}></Product>
 			</section>
+			<Footer></Footer>
 		</>
 	);
 }

@@ -54,7 +54,7 @@ export async function signIn(
 	);
 	// Setelah ambil data form, user langsung diarahkan ke halaman lain
 	// Dalam contoh ini, user dipindahkan ke /dashboard/sign-in
-	return redirect("/");
+	return redirect("/home");
 }
 
 export async function signUp(

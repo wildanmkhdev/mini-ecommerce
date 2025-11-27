@@ -48,3 +48,23 @@ export async function getProducts() {
 		return [];
 	}
 }
+export async function getBrand() {
+	try {
+		const brands = await prisma.brand.findMany({
+			select: {
+				logo: true,
+				id: true,
+			},
+		});
+		const response = brands.map((item, i) => {
+			return {
+				...item,
+				image_url: getImageUrl(item.logo, "brands"),
+			};
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+		return [];
+	}
+}

@@ -19,7 +19,7 @@ export const lucia = new Lucia(adapter, {
 			id: attributes.id,
 			name: attributes.name,
 			email: attributes.email,
-			role: attributes.role,
+			role: attributes.type,
 		};
 	},
 });
@@ -70,7 +70,7 @@ declare module "lucia" {
 		DatabaseAttributes: {
 			id: number;
 			name: string;
-			role: RoleUser;
+			type: RoleUser;
 		};
 	}
 }

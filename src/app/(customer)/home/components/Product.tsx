@@ -37,7 +37,9 @@ export default async function Product({ title }: ListProductProps) {
 
 								<div className="flex flex-col gap-[10px]">
 									<div className="flex flex-col gap-1">
-										<p className="font-semibold leading-[22px]">{item.name}</p>
+										<p className="font-semibold leading-[22px] wrap-break-word">
+											{item.name}
+										</p>
 										<p className="text-sm text-[#616369]">
 											{item.category.name}
 										</p>
