@@ -1,4 +1,31 @@
+"use client";
+import { useFilter } from "@/hooks/use-filter";
+import { useEffect, useState } from "react";
+
 export default function FilterPrice() {
+  const {setFilter } = useFilter();
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(0);
+  useEffect(() => {
+    // buat debounde untuk delay inputya
+    const debounceInput = setTimeout(() => {
+      // console.log(query);
+      setFilter({
+        minPrice: minPrice,
+      });
+    }, 1500);
+    return () => clearTimeout(debounceInput);
+  }, [minPrice]);
+  useEffect(() => {
+    const debounceInput = setTimeout(() => {
+      // console.log(query);
+      setFilter({
+        maxPrice: maxPrice,
+      });
+    }, 1500);
+    return () => clearTimeout(debounceInput);
+  }, [maxPrice]);
+
   return (
     <div>
       <div className="flex flex-col gap-[14px]">
@@ -10,6 +37,7 @@ export default function FilterPrice() {
           <input
             type="number"
             id=""
+            onChange={(e) => setMinPrice(Number.parseInt(e.target.value))}
             name=""
             className="appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black"
             placeholder="Minimum price"
@@ -23,6 +51,7 @@ export default function FilterPrice() {
             type="number"
             id=""
             name=""
+            onChange={(e) => setMaxPrice(Number.parseInt(e.target.value))}
             className="appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black"
             placeholder="Maximum price"
           />

@@ -1,0 +1,13 @@
+{
+  "inlay_hints": {
+    "edit_debounce_ms": 687,
+    "show_background": false
+  },
+  "always_treat_brackets_as_autoclosed": true,
+  "indent_guides": {
+    "coloring": "fixed",
+    "line_width": 1
+  },
+  "preferred_line_length": 135,
+  "tab_size": 3
+}

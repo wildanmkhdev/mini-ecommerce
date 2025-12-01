@@ -1,4 +1,19 @@
+"use client";
+import { useFilter } from "@/hooks/use-filter";
+import { useEffect, useState } from "react";
+
 export default function SearchBar() {
+  const { setFilter } = useFilter();
+  const [query, setQuery] = useState<string>("");
+  useEffect(() => {
+    const debounceInput = setTimeout(() => {
+      // console.log(query);
+      setFilter({
+        search: query,
+      });
+    }, 1500);
+    return () => clearTimeout(debounceInput);
+  }, [query]);
   return (
     <div>
       <div id="title" className="container max-w-[1130px] mx-auto flex items-center justify-between">
@@ -20,6 +35,9 @@ export default function SearchBar() {
             type="text"
             id=""
             name=""
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
             className="appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black"
             placeholder="Search product by name, brand, category"
           />

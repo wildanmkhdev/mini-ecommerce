@@ -1,41 +1,35 @@
-export default function FilterCategory() {
-  return (
-    <div>
-      <div className="flex flex-col gap-[14px]">
-        <p className="font-semibold leading-[22px]">Category</p>
-        <label className="font-semibold flex items-center gap-3">
-          <input
-            type="checkbox"
-            name="loc"
-            className="w-6 h-6 flex shrink-0 appearance-none checked:border-[3px] checked:border-solid checked:border-white rounded-md checked:bg-[#0D5CD7] ring-1 ring-[#0D5CD7]"
-          />
-          <span>Bandung</span>
-        </label>
-        <label className="font-semibold flex items-center gap-3">
-          <input
-            type="checkbox"
-            name="loc"
-            className="w-6 h-6 flex shrink-0 appearance-none checked:border-[3px] checked:border-solid checked:border-white rounded-md checked:bg-[#0D5CD7] ring-1 ring-[#0D5CD7]"
-          />
-          <span>Jakarta</span>
-        </label>
-        <label className="font-semibold flex items-center gap-3">
-          <input
-            type="checkbox"
-            name="loc"
-            className="w-6 h-6 flex shrink-0 appearance-none checked:border-[3px] checked:border-solid checked:border-white rounded-md checked:bg-[#0D5CD7] ring-1 ring-[#0D5CD7]"
-          />
-          <span>Shanghai</span>
-        </label>
-        <label className="font-semibold flex items-center gap-3">
-          <input
-            type="checkbox"
-            name="loc"
-            className="w-6 h-6 flex shrink-0 appearance-none checked:border-[3px] checked:border-solid checked:border-white rounded-md checked:bg-[#0D5CD7] ring-1 ring-[#0D5CD7]"
-          />
-          <span>Beijing</span>
-        </label>
-      </div>
-    </div>
-  );
+import { getCategories } from "@/app/(admin)/dashboard/(main)/categories/lib/data";
+import FilterCheckBoxItem from "./filter-checkbox";
+
+export default async function FilterCategory() {
+   const categories = await getCategories();
+
+   return (
+      <>
+         <div className="flex flex-col gap-[14px]">
+            <p className="font-semibold leading-[22px]">categories</p>
+            {categories.map((category) => (
+               // <label
+               //   className="font-semibold flex items-center gap-3"
+               //   key={`${category.id + category.name}`}
+               //   htmlFor={`${category.id + category.name}`}
+               // >
+               //   <input
+               //     type="checkbox"
+               //     name="category"
+               //     value={category.id}
+               //     className="w-6 h-6 flex shrink-0 appearance-none checked:border-[3px] checked:border-solid checked:border-white rounded-md checked:bg-[#0D5CD7] ring-1 ring-[#0D5CD7]"
+               //   />
+               //   <span>{category.name}</span>
+               // </label>
+               <FilterCheckBoxItem
+                  type="category"
+                  key={category.id + category.name}
+                  id={category.id.toString()}
+                  value={category.name}
+               ></FilterCheckBoxItem>
+            ))}
+         </div>
+      </>
+   );
 }
