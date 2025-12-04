@@ -1,17 +1,17 @@
 export type ActionResult = {
-	error: string;
+   error: string;
 };
 // data type buat ActionResult untuk mengkartegorikan bahwa sanya itu string
 export type Tparams = {
-	id: string;
+   id: string;
 };
 export type Tedit = {
-	params: Tparams;
+   params: Tparams;
 };
 export type Tproduct = {
-  id: number;
-  image_url: string;
-  name: string;
-  category_name: string;
-  price: number;
+   id: number;
+   image_url: string | null;
+   name: string;
+   category_name: string;
+   price: number;
 };
