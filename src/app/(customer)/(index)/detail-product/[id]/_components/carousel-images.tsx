@@ -1,31 +1,35 @@
 "use client";
-import Flickity from "react-flickity-component";
 
-export default function CarouselImages() {
+import dynamic from "next/dynamic";
+import "flickity/css/flickity.css";
+
+const Flickity = dynamic(() => import("react-flickity-component"), {
+   ssr: false,
+});
+
+interface CarouselImagesProps {
+   images: string[];
+}
+
+export default function CarouselImages({ images }: CarouselImagesProps) {
+   const options = {
+      cellAlign: "left",
+      contain: true,
+      pageDots: false,
+      prevNextButtons: false,
+   };
+
    return (
-      <div>
-         <div id="details-images" className="main-carousel mt-[30px] overflow-x-hidden">
-            <Flickity
-               options={{
-                  cellAlign: "left",
-                  contain: true,
-                  pageDots: false,
-                  prevNextButton: false,
-               }}
-            >
-               {[0, 1, 2].map((item) => (
-                  <div className="image-card px-5 first-of-type:pl-[max(20px,calc((100vw-1130px)/2))]" key={item}>
-                     <div className="bg-white w-[470px] h-[350px] p-10 flex shrink-0 border border-[#E5E5E5] justify-center items-center rounded-[30px] overflow-hidden">
-                        <img
-                           src="/assets/thumbnails/color_back_green__buxxfjccqjzm_large_2x-Photoroom 1.png"
-                           className="w-full h-full object-contain"
-                           alt="thumbnail"
-                        />
-                     </div>
+      <div className="main-carousel mt-[30px] overflow-hidden">
+         <Flickity options={options}>
+            {images.map((item, id) => (
+               <div key={item + id} className="px-5 first-of-type:pl-[max(20px,calc((100vw-1130px)/2))]">
+                  <div className="bg-white w-[470px] h-[350px] border border-[#E5E5E5] p-10 flex rounded-[30px] overflow-hidden shrink-0 justify-center items-center">
+                     <img src={item} className="w-full h-full object-contain" alt="thumbnail" />
                   </div>
-               ))}
-            </Flickity>
-         </div>
+               </div>
+            ))}
+         </Flickity>
       </div>
    );
 }
