@@ -15,7 +15,7 @@ function SubmitButton() {
 			disabled={pending}
 			type="submit"
 			className="p-[12px_24px] bg-[#0D5CD7] rounded-full text-center font-semibold text-white">
-			{pending ? "Loading" : "sign in my account"}
+			{pending ? "Loading" : "Sign In My Account"}
 		</button>
 	);
 }

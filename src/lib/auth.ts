@@ -27,7 +27,7 @@ export const getUser = cache(
 	async (): Promise<
 		{ user: User; session: Session } | { user: null; session: null }
 	> => {
-		const cookieStore = await cookies(); // ✅ harus di-await
+		const cookieStore = await cookies(); // harus di-await
 		const sessionId = cookieStore.get(lucia.sessionCookieName)?.value ?? null;
 
 		if (!sessionId) {

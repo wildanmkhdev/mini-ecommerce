@@ -1,5 +1,4 @@
 "use server";
-
 import { schemaSignIn, schemaSignUp } from "@/lib/schema";
 import { ActionResult } from "@/types";
 import prisma from "../../../../../lib/prisma";

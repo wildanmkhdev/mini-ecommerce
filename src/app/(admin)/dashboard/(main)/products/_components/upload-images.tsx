@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 
 export default function UploadImages() {
-	//ref disini itu ibarat referesni bauat ngambi inputan pengguna
+	// ref disini itu ibarat referesni bauat ngambil inputan pengguna
 	const ref = useRef<HTMLInputElement>(null);
 	const thumbnailRef = useRef<HTMLImageElement>(null);
 	const imageFirstRef = useRef<HTMLImageElement>(null);
@@ -22,7 +22,7 @@ export default function UploadImages() {
 			ref.current.click();
 		}
 	};
-	// jika tidak ad data thumnail kembaikan return kosong
+	// jika tidak ad data thumbnail kembaikan return kosong
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (
 			!thumbnailRef.current ||
